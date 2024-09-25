@@ -1,12 +1,12 @@
 function ObtenerProductos() {
-    fetch('https://localhost:7245/Productos')
+    fetch('https://localhost:7245/Clientes')
     .then(response => response.json())
     .then(data => MostrarProductos(data))
     .catch(error => console.log("No se pudo acceder al servicio.", error));
 }
 
 function MostrarProductos(data) {
-    let tbody = document.getElementById('todosLosProductos');
+    let tbody = document.getElementById('todosLosClientes');
     tbody.innerHTML = '';
 
     data.forEach(element => {
@@ -17,19 +17,19 @@ function MostrarProductos(data) {
         td0.appendChild(tdId);
 
         let td1 = tr.insertCell(1);
-        let tdName = document.createTextNode(element.nombreProducto);
+        let tdName = document.createTextNode(element.nombreCliente);
         td1.appendChild(tdName);
 
         let td2 = tr.insertCell(2);
-        let tdCantidad = document.createTextNode(element.cantidad);
-        td2.appendChild(tdCantidad);
+        let tdCantidad = document.createTextNode(element.cliente);
+        td2.appendChild(tdCliente);
 
         let td3 = tr.insertCell(3);
-        let tdPrecioVenta = document.createTextNode(element.precioVenta);
-        td3.appendChild(tdPrecioVenta);
+        let tdPrecioVenta = document.createTextNode(element.clienteId);
+        td3.appendChild(tdClienteId);
 
         let td4 = tr.insertCell(4);
-        let tdPrecioCompra = document.createTextNode(element.precioCompra);
+        let tdClienteId= document.createTextNode(element.clienteId);
         td4.appendChild(tdPrecioCompra);
 
         let btnEditar = document.createElement('button');
@@ -47,16 +47,16 @@ function MostrarProductos(data) {
         td6.appendChild(btnEliminar);
     });
 }
-function MostrarProductos(data) {
+function MostrarClientes(data) {
     $("#todosLosProductos").empty();
     $.each(data, function(index, item) {
         $('#todosLosProductos').append(
             "<tr>",
             "<td>" + item.id + "</td>",
-            "<td>" + item.nombreProducto + "</td>",
-            "<td>" + item.cantidad + "</td>",
-            "<td>" + item.precioVenta + "</td>",
-            "<td>" + item.precioCompra + "</td>",
+            "<td>" + item.nombreCliente + "</td>",
+            "<td>" + item.editarcliente + "</td>",
+            "<td>" + item.EliminarCliente + "</td>",
+            "<td>" + item.DNICliente + "</td>",
             "<td><button class='btn btn-info' onclick='BuscarProductoId(" + item.id + ")'>Modificar</button></td>",
             "<td><button class='btn btn-danger' onclick='EliminarProducto(" + item.id + ")'>Eliminar</button></td>",
             "</tr>"
@@ -64,56 +64,56 @@ function MostrarProductos(data) {
     })
 }
 
-function CrearProducto() {
+function CrearCliente() {
     var nombreProd = document.getElementById("Nombre").value;
     if (nombreProd == "" || nombreProd == null) {
-        return mensajesError('#error', null, "Por favor ingrese un Nombre para el Producto.");
+        return mensajesError('#error', null, "Por favor ingrese un Nombre para el Cliente.");
     }
 
     let producto = {
-        nombreProducto: document.getElementById("Nombre").value,
-        cantidad: document.getElementById("Cantidad").value,
-        precioVenta: document.getElementById("PrecioVenta").value,
-        precioCompra: document.getElementById("PrecioCompra").value,
+        nombreCliente: document.getElementById("NombreCliente").value,
+        CantidadCliente: document.getElementById("CantidadCliente").value,
+        DNICliente: document.getElementById("DNICliente").value,
+        
     };
 
-    fetch('https://localhost:7245/Productos',
+    fetch('https://localhost:7245/Cliente',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(producto)
+            body: JSON.stringify(cliente)
         }
     )
     .then(response => response.json())
     .then(data =>{
         if(data.status == undefined){
-            document.getElementById("Nombre").value = "";
-            document.getElementById("Cantidad").value = 0;
-            document.getElementById("PrecioVenta").value = 0;
-            document.getElementById("PrecioCompra").value = 0;
+            document.getElementById("NombreCliente").value = "";
+            document.getElementById("EditarCliente").value = 0;
+            document.getElementById("EliminarCliente").value = 0;
+            document.getElementById("CrearClientes").value = 0;
 
-            $('#modalAgregarProductos').modal('hide');
-            ObtenerProductos();
+            $('#modalAgregarCliente').modal('hide');
+            ObtenerCliente();
         } else {
             mensajesError('#error', data);
         }
             
     })
-    .catch(error => console.log("Hubo un error al guardar el Producto nuevo, verifique el mensaje de error: ", error))
+    .catch(error => console.log("Hubo un error al guardar el Cliente nuevo, verifique el mensaje de error: ", error))
 }
 
 
-function EliminarProducto(id) {
-    var siElimina = confirm("¿Esta seguro de borrar este producto?.")
+function EliminarCliente(id) {
+    var siElimina = confirm("¿Esta seguro de borrar este cliente?.")
     if (siElimina == true) {
         EliminarSi(id);
     }
 }
 
 function EliminarSi(id) {
-    fetch(`https://localhost:7245/Productos/${id}`,
+    fetch(`https://localhost:7245/Cliente/${id}`,
     {
         method: "DELETE"
     })
@@ -125,50 +125,46 @@ function EliminarSi(id) {
 
 
 function BuscarProductoId(id) {
-    fetch(`https://localhost:7245/Productos/${id}`,{
+    fetch(`https://localhost:7245/Cliente/${id}`,{
         method: "GET"
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById("IdProducto").value = data.id;
-        document.getElementById("NombreEditar").value = data.nombreProducto;
-        document.getElementById("CantidadEditar").value = data.cantidad;
-        document.getElementById("PrecioVentaEditar").value = data.precioVenta;
-        document.getElementById("PrecioCompraEditar").value = data.precioCompra;
+        document.getElementById("IdClliente").value = data.clienteid;
+        document.getElementById("NombreEditarCliente").value = data.nombreCliente;
+        document.getElementById("CantidadClienteEditar").value = data.CantidadCliente;
+        document.getElementById("EliminarClienteEditar").value = data.EliminarCliente;
+        document.getElementById("DniClinteEditar").value = data.DNICliente;
 
-        $('#modalEditarProductos').modal('show');
+        $('#modalEditarCliente').modal('show');
     })
     .catch(error => console.error("No se pudo acceder a la api, verifique el mensaje de error: ", error));
 }
 
 
-function EditarProducto() {
-    let idProducto = document.getElementById("IdProducto").value;
+function EditarCliente() {
+    let idProducto = document.getElementById("IdCliente").value;
 
     let editarProducto = {
         id: idProducto,
-        nombreProducto: document.getElementById("NombreEditar").value,
-        cantidad: document.getElementById("CantidadEditar").value,
-        precioVenta: document.getElementById("PrecioVentaEditar").value,
-        precioCompra: document.getElementById("PrecioCompraEditar").value
+        nombreProducto: document.getElementById("NombreEditarCliente").value,
+        cantidad: document.getElementById("CantidadClinteEditar").value,
     }
 
-    fetch(`https://localhost:7245/Productos/${idProducto}`, {
+    fetch(`https://localhost:7245/Clinte/${idCliente}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editarProducto)
+        body: JSON.stringify(editarcliente)
     })
     .then(data => {
 
-            document.getElementById("IdProducto").value = 0;
-            document.getElementById("NombreEditar").value = "";
-            document.getElementById("CantidadEditar").value = 0;
-            document.getElementById("PrecioVentaEditar").value = 0;
-            document.getElementById("PrecioCompraEditar").value = 0;
-            $('#modalEditarProductos').modal('hide');
-            ObtenerProductos();
+            document.getElementById("IdCliente").value = 0;
+            document.getElementById("NombreEditarCliente").value = "";
+            document.getElementById("CantidadEditarCliente").value = 0;
+            $('#modalEditarCliente').modal('hide');
+            ObtenerCliente();
     })
     .catch(error => console.error("No se pudo acceder a la api, verifique el mensaje de error: ", error))
 }
