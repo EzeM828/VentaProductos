@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cliente venta producto</title>
+
+  <link rel="stylesheet" href="./libreria/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/site.css">
+
+</head>
+
+<body class="container">
+  <h1>cliente</h1>
+
+  <button class="mt-3 mb-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgrarAlumno">Agregar
+    Cliente</button>
+
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Cliente</th>
+        <th>Producto</th>
+        <th>Nombre</th>
+        <th>DNI</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="todosLosClientes"></tbody>
+  </table>
+
+  
+
+  <div id="modalAgregarAlumno" class="modal fade" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agragar Nuevo Cliente</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+
+            <label for="Cliente" class="form-label">Cliente</label>
+            <input type="text" id="Nombre" class="form-control">
+
+
+            <label for="CrearClientes" class="form-label">CrearClientes</label>
+            <input type="text" id="Apellido" class="form-control">
+
+
+            <label for="EliminarCliente" class="form-label">EliminarCliente</label>
+            <input type="text" id="Email" class="form-control">
+
+
+            <label for="EditarCliente" class="form-label">EditarCliente</label>
+            <input type="number" id="DNI" class="form-control">
+
+            <p id="error" hidden style="color: red;"></p>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="crearclientes();">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalEditarAlumno" class="modal fade" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Cliente Existente</h5>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <input type="number" id="IdAlumno" class="form-control" readonly hidden>
+
+            <label for="NombreEditar" class="form-label">Cliente</label>
+            <input type="text" id="NombreEditar" placeholder="Nombre del Cliente" class="form-control">
+
+
+            <label for="ProductoEditar" class="form-label">Producto</label>
+            <input type="text" id="ProductoEditar" class="form-control">
+
+
+            <label for="VentaEditar" class="form-label">Venta</label>
+            <input type="text" id="VentaEditar" class="form-control">
+
+
+            <label for="DNIEditar" class="form-label">DNI</label>
+            <input type="number" id="DNIEditar" class="form-control">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="EditarCliente();">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <script src="./js/cliente.js"></script>
+  <script src="./libreria/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./JQuery/jquery-3.7.1.min.js"></script>
+
+
+  <script type="text/javascript">
+    ObtenerCliente();
+  </script>
+</body>
+
+</html>
+
+
