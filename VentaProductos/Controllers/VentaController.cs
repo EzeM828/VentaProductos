@@ -5,54 +5,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using InscripcionExamenes.Models;
+using VentaProducto.Models;
 using VentaProductos.Models;
 
 namespace VentaProductos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class VentaController : ControllerBase
     {
         private readonly Context _context;
 
-        public ClientesController(Context context)
+        public VentaController(Context context)
         {
             _context = context;
         }
 
         // GET: api/Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<Ventas>>> GetVentas()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.Ventas.ToListAsync();
         }
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<Cliente>> GetVentas(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Ventas.FindAsync(id);
 
-            if (cliente == null)
+            if (Ventas == null)
             {
                 return NotFound();
             }
 
-            return cliente;
+            return Ventas;
         }
 
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutVentas(int id,Ventas Cliente)
         {
-            if (id != cliente.Id)
+            if (id != Ventas.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(Ventas).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace VentaProductos.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!VentasExists(id))
                 {
                     return NotFound();
                 }
@@ -76,33 +76,33 @@ namespace VentaProductos.Controllers
         // POST: api/Clientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostVentas(Ventas cliente)
         {
-            _context.Clientes.Add(cliente);
+            _context.Ventas.Add(Ventas);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return CreatedAtAction("GetVentas", new { id = cliente.Id }, Ventas);
         }
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteVentas(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
+            var Ventas = await _context.Ventas.FindAsync(id);
+            if (Ventas == null)
             {
                 return NotFound();
             }
 
-            _context.Clientes.Remove(cliente);
+            _context.Ventas.Remove(Ventas);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClienteExists(int id)
+        private bool VentasExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Ventas.Any(e => e.Id == id);
         }
     }
 }
